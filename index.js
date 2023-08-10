@@ -1,5 +1,5 @@
 const express = require("express");
-var morgan = require("morgan");
+const morgan = require("morgan");
 
 const app = express();
 
@@ -21,8 +21,9 @@ let notes = [
   },
 ];
 
-app.use(morgan("combined"));
 app.use(express.json());
+morgan.token('body', function (req, res) { return JSON.stringify(req.body) })
+app.use(morgan(':method :url :status :response-time ms - :res[content-length] :body'));
 
 app.head("/", (request, response) => {
   response.status(200).end();
