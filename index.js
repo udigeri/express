@@ -1,4 +1,6 @@
 const express = require("express");
+var morgan = require("morgan");
+
 const app = express();
 
 let notes = [
@@ -19,6 +21,7 @@ let notes = [
   },
 ];
 
+app.use(morgan("combined"));
 app.use(express.json());
 
 app.head("/", (request, response) => {
@@ -81,10 +84,10 @@ app.delete("/api/notes/:id", (request, response) => {
 });
 
 const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: 'unknown endpoint' })
-}
+  response.status(404).send({ error: "unknown endpoint" });
+};
 
-app.use(unknownEndpoint)
+app.use(unknownEndpoint);
 
 const PORT = 3001;
 app.listen(PORT, () => {
