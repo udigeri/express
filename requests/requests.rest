@@ -4,7 +4,15 @@ GET http://localhost:3001/api/notes HTTP/1.1
 GET http://localhost:3001/api/notes/2 HTTP/1.1
 
 ###
-GET http://localhost:3001/api/notes/2ghsdgs HTTP/1.1
+POST http://localhost:3001/api/notes/ HTTP/1.1
+content-type: application/json
+
+{
+    "id": "{{$guid}}",
+    "datetime": "{{$datetime rfc1123}}",
+    "content": "VS code REST client perfect handy tool",
+    "imprtant": true
+}
 
 ###
 DELETE http://localhost:3001/api/notes/2 HTTP/1.1
