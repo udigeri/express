@@ -17,3 +17,8 @@ Web article on [fullstackopen.com](https://fullstackopen.com/en/part3/node_js_an
 ## Development
 
 `npm run dev`
+
+# Mongo DB 
+
+playing with MongoDB
+`node mongo.js password`
