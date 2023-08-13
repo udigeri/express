@@ -1,7 +1,36 @@
 const express = require("express");
 const morgan = require("morgan");
+const mongoose = require('mongoose')
+
+
+if (process.argv.length<3) {
+  console.log('give password as argument')
+  process.exit(1)
+}
+
+const password = process.argv[2]
 
 const app = express();
+const url =
+  `mongodb+srv://udigeri:${password}@cluster0.z5dwrt9.mongodb.net/noteApp?retryWrites=true&w=majority`
+
+mongoose.set('strictQuery',false)
+mongoose.connect(url)
+
+const noteSchema = new mongoose.Schema({
+  content: String,
+  important: Boolean,
+})
+
+const Note = mongoose.model('Note', noteSchema)
+
+noteSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
+})
 
 let notes = [
   {
@@ -33,9 +62,11 @@ app.get("/", (request, response) => {
   response.send("<h1>Hello World!</h1>");
 });
 
-app.get("/api/notes", (request, response) => {
-  response.json(notes);
-});
+app.get('/api/notes', (request, response) => {
+  Note.find({}).then(notes => {
+    response.json(notes)
+  })
+})
 
 app.get("/api/notes/:id", (request, response) => {
   const id = Number(request.params.id);

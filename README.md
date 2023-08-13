@@ -22,3 +22,5 @@ Web article on [fullstackopen.com](https://fullstackopen.com/en/part3/node_js_an
 
 playing with MongoDB
 `node mongo.js password`
+or
+`npm run dev password`
