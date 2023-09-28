@@ -5,7 +5,6 @@ const Note = require('./models/note')
 const morgan = require('morgan');
 const note = require('./models/note');
 
-
 app.use(express.json());
 morgan.token('body', function (req, res) { return JSON.stringify(req.body) })
 app.use(morgan(':method :url :status :response-time ms - :res[content-length] :body'));
@@ -16,7 +15,23 @@ app.head("/", (request, response) => {
 });
 
 app.get("/", (request, response) => {
-  response.send("<h1>Hello World!</h1>");
+  const query = querystring.parse(request.query)
+  response.send('<h1>Hello World!</h1><pre>' + request.query.mediaType + '</pre>');
+});
+
+app.get("/tokenized", (request, response) => {
+  response.send('<!doctype html><html lang="en"><head><meta charset="UTF-8" /><title>TOKENIZED</title></head><body><h1>TOKENIZED</h1><pre style="font-size:18px;">' + JSON.stringify(request.query, null, 4) + '</pre></body></html>')
+});
+
+app.get("/success", (request, response) => {
+  if (request.query.isTokenized == 'TRUE')
+    response.send('<!doctype html><html lang="en"><head><meta charset="UTF-8" /><title>APPROVED TOKENIZED</title></head><body><h1>APPROVED & TOKENIZED</h1><pre style="font-size:18px;">' + JSON.stringify(request.query, null, 4) + '</pre></body></html>')
+  else
+    response.send('<!doctype html><html lang="en"><head><meta charset="UTF-8" /><title>APPROVED</title></head><body><h1>APPROVED</h1><pre style="font-size:18px;">' + JSON.stringify(request.query, null, 4) + '</pre></body></html>')
+});
+
+app.get("/failure", (request, response) => {
+  response.send('<!doctype html><html lang="en"><head><meta charset="UTF-8" /><title>DECLINED</title></head><body><h1>DECLINED</h1><pre style="font-size:18px;">' + JSON.stringify(request.query, null, 4) + '</pre></body></html>')
 });
 
 app.get('/api/notes', (request, response) => {
