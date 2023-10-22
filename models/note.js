@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const config = require('../utils/config')
 
 mongoose.set("strictQuery", false);
 // const password = process.argv[2]
@@ -6,7 +7,7 @@ mongoose.set("strictQuery", false);
 // const url =
 //   `mongodb+srv://udigeri:${password}@cluster0.z5dwrt9.mongodb.net/noteApp?retryWrites=true&w=majority`
 
-const uri = process.env.MONGODB_URI;
+const uri = config.MONGODB_URI;
 //console.log("connecting to", uri);
 
 var url = process.env.MONGODB_SCHEME;

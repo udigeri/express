@@ -1,9 +1,9 @@
-require('dotenv').config()
 const express = require('express')
 const app = express();
+const logger = require('./utils/logger')
+const config = require('./utils/config')
 const Note = require('./models/note')
 const morgan = require('morgan');
-const note = require('./models/note');
 
 app.use(express.json());
 morgan.token('body', function (req, res) { return JSON.stringify(req.body) })
@@ -113,7 +113,7 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint);
 
 const errorHandler = (error, request, response, next) => {
-  console.error(error.message)
+  logger.error(error.message)
 
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
@@ -126,7 +126,6 @@ const errorHandler = (error, request, response, next) => {
 
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 3001
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(config.PORT || 3001, () => {
+  logger.info(`Server running on port ${config.PORT}`);
 });
