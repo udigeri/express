@@ -1,7 +1,7 @@
 const notesRouter = require("express").Router();
 const Note = require("../models/note");
 
-notesRouter.get("", (request, response) => {
+notesRouter.get("/", (request, response) => {
   Note.find({}).then((notes) => {
     response.json(notes);
   });
@@ -19,7 +19,7 @@ notesRouter.get("/:id", (request, response, next) => {
     .catch((error) => next(error));
 });
 
-notesRouter.post("", (request, response) => {
+notesRouter.post("/", (request, response) => {
   const body = request.body;
 
   if (body.content === undefined) {
