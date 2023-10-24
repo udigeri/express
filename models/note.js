@@ -10,17 +10,8 @@ mongoose.set("strictQuery", false);
 const uri = config.MONGODB_URI;
 //console.log("connecting to", uri);
 
-var url = process.env.MONGODB_SCHEME;
-if (url) {
-  url += process.env.MONGODB_USER;
-  url += ":";
-  url += process.env.MONGODB_PASSWORD;
-  url += "@";
-  url += uri;
-} else url = uri;
-
 mongoose
-  .connect(url)
+  .connect(uri)
 
   .then((result) => {
     console.log("connected to MongoDB");

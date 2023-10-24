@@ -21,14 +21,14 @@ const noteSchema = new mongoose.Schema({
 const Note = mongoose.model('Note', noteSchema)
 
 const note = new Note({
-  content: 'CSS is style',
+  content: 'Test database 2',
   important: true,
 })
 
-// note.save().then(result => {
-//   console.log('note saved!')
-//   mongoose.connection.close()
-// })
+note.save().then(result => {
+  console.log('note saved!')
+  mongoose.connection.close()
+})
 
 Note.find({important: {$in: [0,1] }}).then(result => {
   console.log(result.length);
