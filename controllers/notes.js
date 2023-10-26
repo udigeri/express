@@ -6,20 +6,16 @@ notesRouter.get("/", async (request, response) => {
   response.json(notes);
 });
 
-notesRouter.get("/:id", async (request, response, next) => {
-  try {
-    const note = await Note.findById(request.params.id);
-    if (!note) {
-      response.status(404).end();
-    } else {
-      response.json(note);
-    }
-  } catch(exception) {
-    next(exception);
+notesRouter.get("/:id", async (request, response) => {
+  const note = await Note.findById(request.params.id);
+  if (!note) {
+    response.status(404).end();
+  } else {
+    response.json(note);
   }
 });
 
-notesRouter.post("/", async (request, response, next) => {
+notesRouter.post("/", async (request, response) => {
   const body = request.body;
 
   if (body.content === undefined) {
@@ -33,28 +29,20 @@ notesRouter.post("/", async (request, response, next) => {
     important: body.important || false,
   });
 
-  try {
-    const savedNote = await note.save();
-    response.status(201).json(savedNote);
-  } catch(exception) {
-    next(exception);
+  const savedNote = await note.save();
+  response.status(201).json(savedNote);
+});
+
+notesRouter.delete("/:id", async (request, response) => {
+  const note = await Note.findByIdAndDelete(request.params.id);
+  if (!note) {
+    response.status(404).end();
+  } else {
+    response.status(204).end();
   }
 });
 
-notesRouter.delete("/:id", async (request, response, next) => {
-  try {
-    const note = await Note.findByIdAndDelete(request.params.id);
-    if (!note) {
-      response.status(404).end();
-    } else {
-      response.status(204).end();
-    }
-  } catch(exception) {
-    next(exception);
-  }
-});
-
-notesRouter.put("/:id", async (request, response, next) => {
+notesRouter.put("/:id", async (request, response) => {
   const { content, important } = request.body;
 
   const note = {
@@ -62,19 +50,15 @@ notesRouter.put("/:id", async (request, response, next) => {
     important: body.important,
   };
 
-  try {
-    const updatedNote = await Note.findByIdAndUpdate(
-      request.params.id,
-      { content, important },
-      { new: true, runValidators: true, context: "query" }
-    );
-    if (!updatedNote) {
-      response.status(404).end();
-    } else {
-      response.json(updatedNote);
-    }
-  } catch(exception) {
-    next(exception);
+  const updatedNote = await Note.findByIdAndUpdate(
+    request.params.id,
+    { content, important },
+    { new: true, runValidators: true, context: "query" }
+  );
+  if (!updatedNote) {
+    response.status(404).end();
+  } else {
+    response.json(updatedNote);
   }
 });
 
