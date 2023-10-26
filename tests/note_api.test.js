@@ -51,7 +51,7 @@ test("add new note to db", async () => {
     .expect(201)
     .expect("Content-Type", /application\/json/);
 
-  const notesAtEnd = await helper.notesInDb()
+  const notesAtEnd = await helper.notesInDb();
   expect(notesAtEnd).toHaveLength(helper.initialNotes.length + 1);
 
   const contents = notesAtEnd.map((r) => r.content);
@@ -65,7 +65,7 @@ test("note without content is not added", async () => {
 
   await api.post("/api/notes").send(newNote).expect(400);
 
-  const notesAtEnd = await helper.notesInDb()
+  const notesAtEnd = await helper.notesInDb();
   expect(notesAtEnd).toHaveLength(helper.initialNotes.length);
 });
 

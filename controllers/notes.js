@@ -7,8 +7,8 @@ notesRouter.get("/", async (request, response) => {
 });
 
 notesRouter.get("/:id", async (request, response, next) => {
-  const note = await Note.findById(request.params.id);
   try {
+    const note = await Note.findById(request.params.id);
     if (!note) {
       response.status(404).end();
     } else {
@@ -33,8 +33,8 @@ notesRouter.post("/", async (request, response) => {
     important: body.important || false,
   });
 
-  const savedNote = await note.save();
   try {
+    const savedNote = await note.save();
     response.status(201).json(savedNote);
   } catch (error) {
     next(error);
@@ -42,8 +42,8 @@ notesRouter.post("/", async (request, response) => {
 });
 
 notesRouter.delete("/:id", async (request, response, next) => {
-  const note = await Note.findByIdAndDelete(request.params.id);
   try {
+    const note = await Note.findByIdAndDelete(request.params.id);
     if (!note) {
       response.status(404).end();
     } else {
@@ -62,12 +62,12 @@ notesRouter.put("/:id", async (request, response, next) => {
     important: body.important,
   };
 
-  const updatedNote = await Note.findByIdAndUpdate(
-    request.params.id,
-    { content, important },
-    { new: true, runValidators: true, context: "query" }
-  );
   try {
+    const updatedNote = await Note.findByIdAndUpdate(
+      request.params.id,
+      { content, important },
+      { new: true, runValidators: true, context: "query" }
+    );
     if (!updatedNote) {
       response.status(404).end();
     } else {
