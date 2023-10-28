@@ -12,9 +12,10 @@ GET http://localhost:3001/api/notes/64d92d89114a87c1e60f9742 HTTP/1.1
 ###
 POST http://localhost:3001/api/notes/ HTTP/1.1
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3RpayIsImlkIjoiNjUzZDBiMTg5NjRkZDI0MGZlMjdlZDRiIiwiaWF0IjoxNjk4NTA0ODE2fQ.llKb1tJTKBztrOL50cpE7_xoHzmk3Wp0NFdfBLaxRfo
 
 {
-    "content": "Very very new note",
+    "content": "Very very new note created by bearer",
     "imprtant": true,
     "userId": "653d0b18964dd240fe27ed4b"
 }
