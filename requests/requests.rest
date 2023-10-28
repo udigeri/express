@@ -31,3 +31,17 @@ content-type: application/json
     "content": "VS code REST client perfect handy tool and other tools",
     "imprtant": false
 }
+
+###
+GET http://localhost:3001/api/users/ HTTP/1.1
+
+###
+POST http://localhost:3001/api/users/ HTTP/1.1
+content-type: application/json
+
+{
+    "username": "rootik",
+    "name": "superadmin",
+    "password": "admin"
+}
+
